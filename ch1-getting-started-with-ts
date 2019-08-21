@@ -1,0 +1,99 @@
+easy to install with npm install -g typescript  
+verify install with:  
+tsc -v, if nothing, try
+npm -v, if nothing, try
+node -v, if northing, install node  
+
+good ways of using ts:  
+
+Grunt, gulp, webpack, npm/cli, typescript compiler, and parceljs 
+
+install as a dev dependecy easily 
+npm install typescript --save-dev  
+
+main purpose of webpack is to bundle, but it can do many sequential steps, such as compiling ts 
+
+once all tools are installed, you can configure webpack to bundle the js produced by the webpack loader. However, 
+webpack.config.js is needed at root project.  
+
+webpack is dependent on tsconfig.json for all ts related configurations.  
+
+to use npm, we must make sure the build script is defined. 
+"scripts": { "build": "node_modules/typescript/bin/tsc" }, in package.json
+
+with a ts config file that specifies the source map, the rootDir, and outDir the result will be the same as gulp and grunt 
+
+often not preferred because of how simple and limited it is. 
+
+must know which configuration to use.  
+
+so we need to know some of the core options.  
+
+the file locations tells ts where to place compiled files as well as where to find other important files.  
+
+most basic for a project is to indicate to ts where to get ts files and where to publish the result of the compilations.  
+having explicit configuration is the best pratice to avoid confusion. 
+
+baseURL and path
+-------------------------------
+confusion arises when baseURl and paths come into play. 
+baseUrl allows specifying with a non relative name to be resolved. 
+Paths are a map of key value allowing a name to be used as a link to a spcific path to the library, using the baseUrl as the root. 
+this will allow you to use something like 'import * from "jquery"'  
+paths can be used for fallback folders. 
+as a good practice, use a relative path as much as possible.
+
+sourceMap
+sourceMap property, when set to true, will generate the mapping between the generated js and ts. 
+good option to turn on if you do debug in a browser and want to step in the ts code instead of stepping into the compiled js. 
+rarely used under normal circumstances. 
+if you move the map somewhere else, then sourceRoot is interesting. However, if you keep the map but move the js somewhere else than you may change mapRoot. 
+
+included
+included is an array that specifies the glob pattern that in turn speficies which files/folders are to be included in the compilation. 
+exclude will override include if both are set. 
+includes are easier to work with than files config files. 
+
+for all three, these options dont reside under comilerOptions, but are directly set at the root of the tsconfig.json file. 
+outfiles are handy when you need to combine a bunch of ts files into one larger js file. 
+
+typeRoots and types
+--------------------------------
+by default, every type provided inside a node_modeuls library, which includes all specific @types/ and package with .d.ts directly inside the library's folder, are read by the ts compiler! 
+can be manually set if needed
+
+delcaraion and delcarationdir
+if building a library instead of a website or program, it might be wise to provide the definition file along with the generated js file
+by providing js files we are allowing every js dveloper to consume our work. however, ts coders don't want to use that, they want ts files
+we can provide a .d.ts that contains all the signature functions and exported variables. 
+compiler lets us generate the definition file atomically by using declaration in the config file. 
+one caveat, cannot be used with outFile
+
+config file
+--------------------------------
+it is possible to have several config files that can be used in different situations
+ie
+tsc 
+tsc -p tsconfig.json
+tsc -p tsconfig-weekends.json
+
+one benfit of config file is the possibility of reusability by extending configuration
+can be done by using the extends property as a key and the file to inherit from as a value
+good pattern ti have a base config file that you know will be used across all the configs
+
+Module and ModuleResolution
+--------------------------------
+module brings the notion of import and export of code
+ts lets you write your code in a single way and to produce, during compilation, an output that respects different popular module syntax.
+ts can interpret commonJS, AMD, System, UMD, ES6, ES2015, or ESNext
+module is how ts produces the module
+ModuleResolution is how it reads the module
+two ways ts can understand an import statement: class and node 
+try to use relative resolution by specifying in your import a path from the file you are importing
+
+ie
+import x from "./sameFolder"; 
+import y from "../parent/folder"; 
+import z from "../../../deeper/"; 
+
+using absolute resolution brings confusion as it relies on t
