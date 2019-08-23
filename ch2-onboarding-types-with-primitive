@@ -75,4 +75,108 @@ must add symbol to the tsconfig.json:
   "es2015.symbol"
 ]
 
+Non-Primitive
+--------------------------------
+void, string literal, type, any, unknown, never
 
+void
+--------------------------------
+special used mainly for a function that returns no value. f
+functio cannot accept a return statement with a value
+acts as a guard of potential error
+void can only be assigned to undefined
+let: a: void = void;
+always good practice to mark function with void instead of using the implicit return val.
+implitic return type for a function is a weak void because the function allows the returning of anything.
+
+reasons to avoid using any type
+--------------------------------
+any is a wildcard that allows any type at will, many problmens with this.
+use of any should be avoided
+only reason is for two reasons:
+migrating from js to ts
+cannot figure out a type and must move on
+
+never
+--------------------------------
+never is a variable that should never be set
+function rarely returns never, but does happen.
+in practice, never type is used for checking whether all values of an enum or a union have conditions that took care of all the values.
+
+unknown
+--------------------------------
+new addition to reduce usage of any
+unkonwn can only be set to another unknown type or any type
+unkonwn can be only used with the equality operator
+function that reutnrs unknown does not require to return anything
+intersection with the unknown type is uselesss
+when used in union, it will always take precedence and override other types
+key is always never
+
+can be used when you do not know a type
+use of unknown restricts the flow of the variable.
+any can return a string, but with unknown it must be dealth with
+
+enforcing type in a list
+--------------------------------
+possible to have an array holding more than one type of a type by combining the array type with a union
+let arrayWithSquareBrackets2: (number | string)[] = [1, 2, "one", "two"]; 
+
+defining a conscribed set of  constants with enum
+--------------------------------
+let you specify as many possible values as a group where only a single item can be selected
+can specifiy a value to a key for fine grained control
+can support mix of string and number
+accessed by enum or by the value
+common way to assigned enum in ts is with dot notation
+assignation by val is useful when data come from json
+in addition to num and string, enum supports bitwise operators with the help of a bit shift oeprator
+value can hold more than a single value
+must use triple equals and doublt ampersand for comparisons.
+enum is a great way to define a set of potential value from a specific domain for a var
+
+string literal and its diff to string
+--------------------------------
+string allows any kind of characters, string literal is the association of particular string as a type.
+only value possible to set to a string literal is the exact string stamped at declaration
+ensures that only a single string value can be associated with a var
+assurance that value is unique
+there are three types of literals, string number and boolean
+always provide type using colon
+const myLiteral: "onlyAcceptedValue" = "onlyAcceptedValue"
+
+crafting a typed function
+-------------------------------
+params are defined in parentheses
+each param must be followed by its type
+function fn1(param1: number): string{return '';}
+can have several parameters of different type: 
+function fn2(param1: boolean, param2: number):void {}
+can have a parameter with more than one type using a union
+function fn3(param1: boolean | string): void {}
+can use union to allow multiple return t ypes:
+function fn4():string | number | boolean {return '';}
+can have complimentary sig to indicate to the consumer with parameters match together an with the return type.
+can be anonymous
+can be a var function or a typical function
+if code returns directly without doing any several statements, need for curly brackets and return statements is not needed.
+params can be option with the ? symbol, ie param1?: boolean
+optional is different than having the variable with a union to undefined because the union requires passing the value or undefined while options allows passing the value, undefined, or nothing at all.
+optional can only be set after non optional
+fn can be in a class
+different syntax here, doesnt use keyword function, visibility is proveded which is public, private, or protected.
+omission of visibility defaults to public
+can create a variable that holds a function inside of a class!
+
+how to be strongly typed without specifying the type
+--------------------------------
+implicit type or a type defined by inference
+var inference is only possible when a value is assigned at the declaration
+types fallback to any, yuck
+true even if the val is set within the scope of the var life.
+constant type is not a number, it is a number literl. it is of the type of the value you gave it!
+scopes down to the simplest type it can find which is the value of the primitive
+inference works with functions
+somelimitations to this
+cannot infer by usage with having room for error, params much be explicit!
+but the return can be implicit
