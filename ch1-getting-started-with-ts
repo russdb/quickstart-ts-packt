@@ -96,4 +96,32 @@ import x from "./sameFolder";
 import y from "../parent/folder"; 
 import z from "../../../deeper/"; 
 
-using absolute resolution brings confusion as it relies on t
+using absolute resolution brings confusion as it relies on other configurations like baseUrl and moduleResolution
+if you are using a common name, you may get unexpected module results
+
+ecmascript
+----------------------------------
+target option must be specified byr arely changed
+options are es3, es5, es6/es2015, es2016, es2017, and esnext
+
+compiler strictness
+many option around how strict the compiler must analyzed your code
+strict is what you should use if you start a new ts project coming from js
+StrictPropertyInitialization should always be set to true, ensures that all properties of a class ar einitialized with a direct association at the declaration level 
+many solutions to keep the strictness and make the code compliant
+first solution
+class A {
+  public field1: number =1;
+}
+in some cases its possible to specify value at construction type: 
+
+class A {
+  public field1: number;
+  constructor(p:number) {
+    this.field1 = p;
+  }
+}
+
+third way the operator indicates to ts that the value will be provided later. usually by third party library
+
+one caveat, must have strictNullChecks true. less confusing and more declarative to only support a field with an explicit type
