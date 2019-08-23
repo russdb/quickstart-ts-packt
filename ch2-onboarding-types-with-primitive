@@ -1,0 +1,78 @@
+var
+--------------------------------
+main issue with var is that it gets declared in the execution context
+var-declared variables are created before the execution of the code
+a = 2; // wont create variable in typescript
+ts cannot protect against hoisting
+subtlety is that declaration is moved up, but not the initialization
+
+let
+--------------------------------
+let is scope based
+cannot be declared more than once per scope
+does not hoise the variable
+simplifies the readability of the code
+avoids unexpected errors
+doesnt set a global variable
+type associated with var is immutable 
+let in a switch can be tricky because scoping is for the switch, not case
+should be used instead of var basically all of the time 
+
+const
+--------------------------------
+highlights to the reader of the code that the value cannot be set more than once, delcared and initialized
+with let and const, ensures that the value assigned to a variable is associated with the desired variable, and any fault assignation will cause compiler returning an error
+
+enhancing primitives with typescript
+--------------------------------
+all primitives much use one delcaration previously discussed with a unique var name and use the colon followed by the word number
+
+number
+--------------------------------
+number can be integer, floa, double, negative, positive and even NaN
+many ways to convert a boolean to anumber
+number constructor
+ternary operator
++ sign, eg number = +true
+parseInt function, remember to specify the base
+
+string
+--------------------------------
+identical to js for a string
+interpolation can run any ts code
+let interpolation2: string = `Can invoke variable function: ${string1.substr(0, 1)}`
+
+boolean
+--------------------------------
+true and false, no 1's or 0's
+
+Null
+--------------------------------
+can be asssigned to a var when the main val is not available.
+usagfe of null should be limited in ts in favor of undefined
+with strictNullChecks activated, the null value can only be assigned to a type allowing null or to a value or type any. To have a type accepting null a union must be used
+let primitiveWithNull: number | null = nulll
+
+udefined
+--------------------------------
+can be assigned to a var when the main val is not available
+it has more cases than null
+to avoid having a field that is not explicitly mentioning undefined to be undefined because of a lack of initialization, the strictPropertyInitialization compiler option should be set to true
+to have a type accept undefined, a union must be used with the primitive and undefined
+undefined can also use the optional notation in a class or an interface
+
+symbol
+--------------------------------
+symbol allows creation of a value that is unique.
+different than a constant because two constants with the same value are equal, which is not the case with two symbols with the same value
+comparisons with symbol work differently, every symbol is unique, hence even wtih the same value, they are not the same.
+use of symbol can ensure that the value provided is absolutely the one desired.
+finally, symbol can be used as an inurance with defining a field to an object
+symbol is by nature immutable
+must add symbol to the tsconfig.json:
+"lib": [
+  "es2015",
+  "es2015.symbol"
+]
+
+
